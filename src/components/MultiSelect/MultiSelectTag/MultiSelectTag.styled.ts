@@ -12,7 +12,7 @@ const MultiSelectTagStyled = styled.div`
     cursor: default;
 
     .label {
-        font-size: 14px;
+        font-size: 16px;
         line-height: 16px;
         font-weight: 600;
         color: #334155;
@@ -30,6 +30,11 @@ const MultiSelectTagStyled = styled.div`
         background-color: #94A3B8;
         outline: none;
         cursor: pointer;
+
+        svg {
+            /* width: px;
+            height: 10px; */
+        }
 
         &:hover {
             background-color: #9fa9b3;

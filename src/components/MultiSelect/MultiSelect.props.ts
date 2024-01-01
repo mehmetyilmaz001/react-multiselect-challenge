@@ -6,7 +6,7 @@ export interface MultiSelectOption {
 
 export interface MultiSelectProps {
     value: MultiSelectOption[];
-    onChange: (value: MultiSelectOption) => void;
+    onChange: (value: MultiSelectOption[]) => void;
     options: MultiSelectOption[];
     placeholder?: string;
     optionRenderer?: (option: MultiSelectOption) => JSX.Element;

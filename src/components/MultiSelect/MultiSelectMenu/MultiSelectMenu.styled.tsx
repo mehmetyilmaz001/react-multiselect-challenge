@@ -9,6 +9,7 @@ const MultiSelectMenuStyled = styled.div`
     left: 0;
     width: 100%;
     min-height: 100px;
+    max-height: 300px;
     overflow-y: auto;
 
     background-color: #fff;

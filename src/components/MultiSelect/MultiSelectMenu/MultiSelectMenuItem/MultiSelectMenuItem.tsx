@@ -2,14 +2,17 @@ import { MultiSelectMenuItemProps } from "./MultiSelectMenuItem.props";
 import MultiSelectMenuItemStyled from "./MultiSelectMenuItem.styled";
 
 const MultiSelectMenuItem = (props: MultiSelectMenuItemProps) => {
-    const { label, onClick, highlighted } = props;
+    const { label, onItemSelect, highlighted, isSelected } = props;
     return (
         <MultiSelectMenuItemStyled 
-            onClick={onClick} 
+            onClick={(e) => {
+                e.preventDefault();
+                onItemSelect();
+            }} 
             $highlighted={highlighted}
         >
             <label>
-                <input type="checkbox" />
+                <input type="checkbox" checked={isSelected} />
                 {label}
             </label>
         </MultiSelectMenuItemStyled>

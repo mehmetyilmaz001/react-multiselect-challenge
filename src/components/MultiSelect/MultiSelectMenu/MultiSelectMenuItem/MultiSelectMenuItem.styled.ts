@@ -4,13 +4,15 @@ const MultiSelectMenuItemStyled = styled.div<{$highlighted: boolean}>`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-height: 48px;
     width: 100%;
     height: max-content;
-    padding: 16px 8px;
+    padding: 0px 8px;
     border-bottom: solid 1px #94A3B8;
     overflow: hidden;
 
     background-color: ${({ $highlighted }) => $highlighted ? '#E4E7EB' : '#FFFFFF'};
+
 
     &:hover {
         background-color: #E4E7EB;
@@ -26,6 +28,7 @@ const MultiSelectMenuItemStyled = styled.div<{$highlighted: boolean}>`
         gap: 4px;
         font-size: 16px;
         cursor: pointer;
+        padding: 16px 0px;
     }
 `;
 

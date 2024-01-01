@@ -1,32 +1,33 @@
-import { FormEventHandler, KeyboardEventHandler, MouseEventHandler, useEffect, useRef, useState } from "react";
+import { ElementRef, FormEventHandler, KeyboardEventHandler, MouseEventHandler, Ref, useContext, useEffect, useRef, useState } from "react";
 import { MultiSelectProps } from "./MultiSelect.props";
 import { KEY_CODES } from "./MultiSelect.consts";
 import { MultiSelectMenuProps } from "./MultiSelectMenu/MultiSelectMenu.props";
+import { useOutsideClick } from "./shared/hooks";
 
 export default function useMultiSelect (props: MultiSelectProps) {
  
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
 
     const onClickOutside = () => {
         onMenuClose();
     }
     const wrapperRef = useOutsideClick(onClickOutside);
     const menuRef = useRef<MultiSelectMenuProps>();
+    const inputRef = useRef<HTMLInputElement>();
   
 
     const onMenuClose = () => {
         setIsMenuOpen(false);
-        console.log('onMenuClose');
+        inputRef.current?.blur();
     }
 
     const onMenuOpen = () => {
         setIsMenuOpen(true);
-        console.log('onMenuOpen');
     }
 
     const onInputFocus = () => {
         onMenuOpen();
-        console.log('onInputFocus');
     }
 
     const onInputChange: FormEventHandler<HTMLInputElement> = (e) => {
@@ -34,14 +35,13 @@ export default function useMultiSelect (props: MultiSelectProps) {
     }
 
     const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (e, ...rest) => {
-        console.log('onKeyDown', e.key);
         if([KEY_CODES.ESC].includes(e.key)) {
             e.preventDefault();
             onMenuClose();
-        }
+        }        
 
         if (isMenuOpen) {
-            menuRef.current.onKeyDown(e, ...rest);
+            menuRef.current.onMenuKeyDown(e, ...rest);
         }
     }
 
@@ -53,27 +53,7 @@ export default function useMultiSelect (props: MultiSelectProps) {
         onMenuOpen,
         wrapperRef,
         menuRef,
+        inputRef,
         onKeyDown
     };
 }
-
-const useOutsideClick = (callback) => {
-    const ref = useRef<HTMLElement>();
-  
-    useEffect(() => {
-      const handleClick = (event) => {
-          if (ref.current && !ref.current.contains(event.target)) {
-              console.log('%cMultiSelect.hooks.ts line:64 ref.current', 'color: #007acc;', ref.current);
-            callback();
-         }
-      };
-  
-      document.addEventListener('click', handleClick, true);
-  
-      return () => {
-        document.removeEventListener('click', handleClick, true);
-      };
-    }, [ref]);
-  
-    return ref;
-  };

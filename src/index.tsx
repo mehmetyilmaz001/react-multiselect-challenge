@@ -6,7 +6,5 @@ import { App } from './App';
 const root = createRoot(document.getElementById('app'));
 
 root.render(
-  <StrictMode>
-    <App name="StackBlitz" />
-  </StrictMode>
+    <App name="Multi Select Challenge" />
 );

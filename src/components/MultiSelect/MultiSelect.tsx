@@ -6,16 +6,17 @@ import MultiSelectInput from "./MultiSelectInput/MultiSelectInput";
 import useMultiSelect from "./MultiSelect.hooks";
 import MultiSelectMenu from "./MultiSelectMenu/MultiSelectMenu";
 import MultiSelectTrigger from "./MultiSelectTrigger/MultiSelectTrigger";
+import MultiSelectProvider from "./MultiSelect.context";
 
-const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props) => {
+const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props, ref) => {
 
     const { 
-        value, 
-        onChange, 
+        value,
         options, 
         placeholder, 
         optionRenderer, 
-        classSuffix = 'multi-select', 
+        classSuffix = 'multi-select',
+        onChange,
     } = props;
 
     const { 
@@ -24,30 +25,39 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props) => {
         isMenuOpen, 
         wrapperRef,
         menuRef,
+        inputRef,
         onMenuClose,
         onMenuOpen,
         onKeyDown,
     } = useMultiSelect(props);
 
     return (
-        <MultiSelectStyled className={`multi-select-wrapper-${classSuffix}`} ref={wrapperRef} onKeyDown={onKeyDown}>
-            <MultiSelectOverflow value={value} />
-            <MultiSelectInput 
-                onFocus={onInputFocus} 
-                onChange={onInputChange} 
-                placeholder={placeholder} 
-            />
-            <MultiSelectMenu 
-                value={options} 
-                isOpen={isMenuOpen} 
-                ref={menuRef} 
-            />
-            <MultiSelectTrigger 
-                isOpen={isMenuOpen} 
-                onClose={onMenuClose} 
-                onOpen={onMenuOpen}  
-            />
-        </MultiSelectStyled>
+        <MultiSelectProvider initialValue={value} onChange={onChange}>
+            <MultiSelectStyled 
+                className={`multi-select-wrapper-${classSuffix}`} 
+                ref={wrapperRef ?? ref} 
+                onKeyDown={onKeyDown}
+            >
+                <MultiSelectOverflow /> 
+                <MultiSelectInput 
+                    onFocus={onInputFocus} 
+                    onChange={onInputChange} 
+                    placeholder={placeholder}
+                    ref={inputRef}
+                />
+                {isMenuOpen && <MultiSelectMenu 
+                    options={options} 
+                    isOpen={isMenuOpen} 
+                    ref={menuRef}
+                    onClose={onMenuClose}
+                /> }
+                <MultiSelectTrigger 
+                    isOpen={isMenuOpen} 
+                    onClose={onMenuClose} 
+                    onOpen={onMenuOpen}  
+                />
+            </MultiSelectStyled>
+        </MultiSelectProvider>
     );
 });
 

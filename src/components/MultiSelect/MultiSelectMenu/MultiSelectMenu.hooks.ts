@@ -1,44 +1,57 @@
-import { KeyboardEventHandler, useImperativeHandle, useState } from "react";
+import { useCallback, useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { MultiSelectMenuProps } from "./MultiSelectMenu.props";
 import { KEY_CODES } from "../MultiSelect.consts";
+import { MultiSelectOption } from "../MultiSelect.props";
+import { MultiSelectContext } from "../MultiSelect.context";
 
 const useMultiSelectMenu = (props: MultiSelectMenuProps, ref) => {
+
+    const { isOpen, options, onClose } = props;
+
+    const {value, setValue} = useContext(MultiSelectContext)
     const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
 
+    const onItemSelect = useCallback((item: MultiSelectOption) => {
+        if(value.map(v => v.value).includes(item.value)) {
+            setValue(value.filter((v) => v.value !== item.value));
+        }else{
+            setValue([...value, item]);
+        }
+    }, [value]);
+
+    const scrollIntoView = (args: number) => {
+      ref.current?.scrollTo({ index: args });
+    };
+
     useImperativeHandle(ref, () => ({
-        onKeyDown: (event: KeyboardEvent) => {
-         console.log('%cMultiSelectMenu.hooks.ts line:10 event.key', 'color: #007acc;', event.key);
+       onMenuKeyDown: (event: KeyboardEvent) => {
           const { key } = event;
-          
           switch (key) {
             case KEY_CODES.DOWN_ARROW:
-                if(highlightedIndex === props.value.length - 1) {
+                if(highlightedIndex === options.length - 1) {
                   setHighlightedIndex(0);
                 }else {
                   setHighlightedIndex((prevIndex) => prevIndex + 1);
                 }
-                // scrollIntoView(nextActiveIndex);
+                scrollIntoView(highlightedIndex + 1);
                 break;
             case KEY_CODES.UP_ARROW:
-              if(highlightedIndex === 0) {
-                setHighlightedIndex(props.value.length - 1);
-              }else {
-                setHighlightedIndex((prevIndex) => prevIndex - 1);
-              }
+                if(highlightedIndex === 0) {
+                  setHighlightedIndex(options.length - 1);
+                }else {
+                  setHighlightedIndex((prevIndex) => prevIndex - 1);
+                }
+                scrollIntoView(highlightedIndex - 1);
               break;
             
-
-            // >>> Select
             case KEY_CODES.ENTER: {
-              // value
-            //   const item = memoFlattenOptions[activeIndex];
-            //   if (item && !item?.data?.disabled && !overMaxCount) {
-            //     onSelectValue(item.value);
-            //   } else {
-            //     onSelectValue(undefined);
-            //   }
+                const item = options[highlightedIndex];
+                
+                if(item) {
+                    onItemSelect(item);
+                }
     
-              if (open) {
+              if (isOpen) {
                 event.preventDefault();
               }
     
@@ -47,40 +60,23 @@ const useMultiSelectMenu = (props: MultiSelectMenuProps, ref) => {
     
             // >>> Close
             case KEY_CODES.ESC: {
-              //toggleOpen(false);
+              onClose?.();
               if (open) {
                 event.stopPropagation();
               }
             }
           }
         },
-        scrollTo: (index) => {
-        },
+        scrollTo: (args: number) => {
+          // scrollIntoView(args);
+          // ref.current?.scrollTo({ index: args });
+        }
       }));
-    
-    
-    const onMenuKeyDown: KeyboardEventHandler = (event) => {
-        // console.log('%cMultiSelectMenu.hooks.ts line:9 event', 'color: #007acc;', event);
-        // event.preventDefault();
-        // switch(event.key) {
-        //     case KEY_CODES.DOWN_ARROW:
-        //         setHighlightedIndex((prevIndex) => prevIndex + 1);
-        //         break;
-        //     case KEY_CODES.UP_ARROW:
-        //         setHighlightedIndex((prevIndex) => prevIndex - 1);
-        //         break;
-        //     case KEY_CODES.SPACE:
-        //     case KEY_CODES.ENTER:
-        //         // props.onSelect(props.value[highlightedIndex]);
-        //         break;
-        //     default:
-        //         break;
-        // }
-    };
-
+  
     return {
-        onMenuKeyDown,
-        highlightedIndex
+        highlightedIndex,
+        onItemSelect,
+        value,
     };
 };
 

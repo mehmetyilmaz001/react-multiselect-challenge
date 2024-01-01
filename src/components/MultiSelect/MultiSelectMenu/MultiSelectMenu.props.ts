@@ -1,8 +1,10 @@
 import { MultiSelectOption } from "../MultiSelect.props";
 
-export type MultiSelectMenuProps = React.HTMLAttributes<HTMLDivElement> & {
-    value: MultiSelectOption[];
-    onKeyDown?: React.KeyboardEventHandler;
+export interface MultiSelectMenuProps {
+    options: MultiSelectOption[];
+    onMenuKeyDown?: React.KeyboardEventHandler;
     scrollTo?: (args: number) => void;
     isOpen: boolean;
+    onValueChange?: (value: MultiSelectOption[]) => void;
+    onClose?: () => void;
 }

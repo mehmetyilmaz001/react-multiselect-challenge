@@ -2,5 +2,6 @@ export interface MultiSelectMenuItemProps extends React.HTMLAttributes<HTMLDivEl
     label: string;
     value: string;
     isSelected?: boolean;
+    highlighted?: boolean;
     onClick?: () => void;
 }

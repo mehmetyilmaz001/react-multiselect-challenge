@@ -1,21 +1,17 @@
-import { FormEventHandler, MouseEventHandler, useEffect, useRef, useState } from "react";
+import { FormEventHandler, KeyboardEventHandler, MouseEventHandler, useEffect, useRef, useState } from "react";
 import { MultiSelectProps } from "./MultiSelect.props";
+import { KEY_CODES } from "./MultiSelect.consts";
+import { MultiSelectMenuProps } from "./MultiSelectMenu/MultiSelectMenu.props";
 
 export default function useMultiSelect (props: MultiSelectProps) {
-    const { 
-        value, 
-        onChange, 
-        options, 
-        placeholder, 
-        optionRenderer, 
-        classSuffix = 'multi-select', 
-    } = props;
+ 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     const onClickOutside = () => {
         onMenuClose();
-        console.log('onClickOutside');
     }
     const wrapperRef = useOutsideClick(onClickOutside);
+    const menuRef = useRef<MultiSelectMenuProps>();
   
 
     const onMenuClose = () => {
@@ -37,6 +33,18 @@ export default function useMultiSelect (props: MultiSelectProps) {
         console.log('onInputChange', e.currentTarget.value);
     }
 
+    const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (e, ...rest) => {
+        console.log('onKeyDown', e.key);
+        if([KEY_CODES.ESC].includes(e.key)) {
+            e.preventDefault();
+            onMenuClose();
+        }
+
+        if (isMenuOpen) {
+            menuRef.current.onKeyDown(e, ...rest);
+        }
+    }
+
     return {
         onInputFocus,
         onInputChange,
@@ -44,6 +52,8 @@ export default function useMultiSelect (props: MultiSelectProps) {
         onMenuClose,
         onMenuOpen,
         wrapperRef,
+        menuRef,
+        onKeyDown
     };
 }
 

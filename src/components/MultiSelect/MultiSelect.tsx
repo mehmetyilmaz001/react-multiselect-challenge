@@ -20,22 +20,28 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props) => {
 
     const { 
         onInputFocus, 
-        onInputChange, 
+        onInputChange,
         isMenuOpen, 
         wrapperRef,
+        menuRef,
         onMenuClose,
-        onMenuOpen
+        onMenuOpen,
+        onKeyDown,
     } = useMultiSelect(props);
 
     return (
-        <MultiSelectStyled className={`multi-select-wrapper-${classSuffix}`} ref={wrapperRef}>
+        <MultiSelectStyled className={`multi-select-wrapper-${classSuffix}`} ref={wrapperRef} onKeyDown={onKeyDown}>
             <MultiSelectOverflow value={value} />
             <MultiSelectInput 
                 onFocus={onInputFocus} 
                 onChange={onInputChange} 
                 placeholder={placeholder} 
             />
-            <MultiSelectMenu value={options} isOpen={isMenuOpen} />
+            <MultiSelectMenu 
+                value={options} 
+                isOpen={isMenuOpen} 
+                ref={menuRef} 
+            />
             <MultiSelectTrigger 
                 isOpen={isMenuOpen} 
                 onClose={onMenuClose} 

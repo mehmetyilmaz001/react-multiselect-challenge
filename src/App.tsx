@@ -15,6 +15,8 @@ export const App: FC<{ name: string }> = ({ name }) => {
         options={[
           {label: 'Test 1 Label', value: 'Test 1 Value'},
           {label: 'Test 2 Label', value: 'Test 2 Value'},
+          {label: 'Test 3 Label', value: 'Test 3 Value'},
+          {label: 'Test 4 Label', value: 'Test 4 Value'},
         ]}
         placeholder="Select an option"
       />

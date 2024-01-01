@@ -1,28 +1,32 @@
-import { FC } from "react";
 import { MultiSelectMenuProps } from "./MultiSelectMenu.props";
 import MultiSelectMenuStyled from "./MultiSelectMenu.styled";
 import MultiSelectMenuItem from "./MultiSelectMenuItem/MultiSelectMenuItem";
+import useMultiSelectMenu from "./MultiSelectMenu.hooks";
+import { forwardRef } from "react";
 
-const MultiSelectMenu: FC<MultiSelectMenuProps> = (props) => {
+const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, ref) => {
     const { value = [], isOpen } = props;
+
+    const { onMenuKeyDown, highlightedIndex } = useMultiSelectMenu(props, ref);
     
     let component: React.ReactNode = <>Nothing to show here</>;
 
     if(value.length > 0) {
-        component = props.value.map((option) => (
+        component = value.map((option, index) => (
             <MultiSelectMenuItem 
                 key={option.value} 
                 value={option.value} 
-                label={option.label} 
+                label={option.label}
+                highlighted={highlightedIndex === index}
             />
         ));
     }
 
     if(isOpen) {
-        return <MultiSelectMenuStyled>{component}</MultiSelectMenuStyled>;
+        return <MultiSelectMenuStyled onKeyDown={onMenuKeyDown} ref={ref}>{component}</MultiSelectMenuStyled>;
     }else{
         return null;
     }
-}
+});
 
 export default MultiSelectMenu;

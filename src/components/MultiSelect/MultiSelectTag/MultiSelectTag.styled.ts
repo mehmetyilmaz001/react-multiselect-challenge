@@ -5,6 +5,7 @@ const MultiSelectTagStyled = styled.div`
     gap: 8px;
     align-items: center;
     justify-content: center;
+    width: max-content;
     height: 60px;
     padding: 0 16px;
     border-radius: 12px;

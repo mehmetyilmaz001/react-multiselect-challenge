@@ -12,7 +12,11 @@ export const App: FC<{ name: string }> = ({ name }) => {
           {label: 'Test 2 Label', value: 'Test 2 Value'}
         ]} 
         onChange={() => {}}
-        options={[{label: 'Test 1 Label', value: 'Test 1 Value'}]}
+        options={[
+          {label: 'Test 1 Label', value: 'Test 1 Value'},
+          {label: 'Test 2 Label', value: 'Test 2 Value'},
+        ]}
+        placeholder="Select an option"
       />
     </div>
   );

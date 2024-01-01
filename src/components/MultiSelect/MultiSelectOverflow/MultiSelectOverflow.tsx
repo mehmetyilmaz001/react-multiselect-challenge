@@ -3,10 +3,10 @@ import { MultiSelectOverflowProps } from "./MultiSelectOverflow.props";
 import MultiSelectOverflowStyled from "./MultiSelectOverflow.styled";
 
 const MultiSelectOverflow = (props: MultiSelectOverflowProps) => {
-    const { value } = props;
+    const { value, onClick } = props;
     
     return (
-        <MultiSelectOverflowStyled>
+        <MultiSelectOverflowStyled onClick={onClick}>
             {value.map((option) => (
                 <MultiSelectTag 
                     key={option.value} 

@@ -1,8 +1,7 @@
-import { FormEventHandler, useEffect, useState } from "react";
+import { FormEventHandler, MouseEventHandler, useEffect, useRef, useState } from "react";
 import { MultiSelectProps } from "./MultiSelect.props";
 
 export default function useMultiSelect (props: MultiSelectProps) {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { 
         value, 
         onChange, 
@@ -11,6 +10,13 @@ export default function useMultiSelect (props: MultiSelectProps) {
         optionRenderer, 
         classSuffix = 'multi-select', 
     } = props;
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const onClickOutside = () => {
+        onMenuClose();
+        console.log('onClickOutside');
+    }
+    const wrapperRef = useOutsideClick(onClickOutside);
+  
 
     const onMenuClose = () => {
         setIsMenuOpen(false);
@@ -31,23 +37,33 @@ export default function useMultiSelect (props: MultiSelectProps) {
         console.log('onInputChange', e.currentTarget.value);
     }
 
-    const onClickOutside = () => {
-        onMenuClose();
-        console.log('onClickOutside');
-    }
-
-    useEffect(() => {
-        document.addEventListener('click', onClickOutside);
-        return () => {
-            document.removeEventListener('click', onClickOutside);
-        }
-    }, []);
-
     return {
         onInputFocus,
         onInputChange,
         isMenuOpen,
         onMenuClose,
         onMenuOpen,
+        wrapperRef,
     };
 }
+
+const useOutsideClick = (callback) => {
+    const ref = useRef<HTMLElement>();
+  
+    useEffect(() => {
+      const handleClick = (event) => {
+          if (ref.current && !ref.current.contains(event.target)) {
+              console.log('%cMultiSelect.hooks.ts line:64 ref.current', 'color: #007acc;', ref.current);
+            callback();
+         }
+      };
+  
+      document.addEventListener('click', handleClick, true);
+  
+      return () => {
+        document.removeEventListener('click', handleClick, true);
+      };
+    }, [ref]);
+  
+    return ref;
+  };

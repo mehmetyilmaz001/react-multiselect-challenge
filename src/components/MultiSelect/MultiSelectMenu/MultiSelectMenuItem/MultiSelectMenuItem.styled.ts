@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const MultiSelectMenuItemStyled = styled.div<{$highlighted: boolean}>`
-    display: flex;
     flex-direction: column;
     justify-content: center;
     min-height: 48px;
@@ -10,6 +9,8 @@ const MultiSelectMenuItemStyled = styled.div<{$highlighted: boolean}>`
     padding: 0px 8px;
     border-bottom: solid 1px #94A3B8;
     overflow: hidden;
+    max-width: 100%;
+    display: inline-flex;
 
     background-color: ${({ $highlighted }) => $highlighted ? '#E4E7EB' : '#FFFFFF'};
 

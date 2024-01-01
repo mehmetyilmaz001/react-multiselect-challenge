@@ -7,4 +7,5 @@ export interface MultiSelectMenuProps {
     isOpen: boolean;
     onValueChange?: (value: MultiSelectOption[]) => void;
     onClose?: () => void;
+    children?: React.ReactNode;
 }

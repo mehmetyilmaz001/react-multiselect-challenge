@@ -1,10 +1,12 @@
-import { useCallback, useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { createRef, useCallback, useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { MultiSelectMenuProps } from "./MultiSelectMenu.props";
 import { KEY_CODES } from "../MultiSelect.consts";
 import { MultiSelectOption } from "../MultiSelect.props";
 import { MultiSelectContext } from "../MultiSelect.context";
 
-const useMultiSelectMenu = (props: MultiSelectMenuProps, ref) => {
+const useMultiSelectMenu = (props: MultiSelectMenuProps, forwardedRef) => {
+
+    const menuDivRef = useRef<HTMLDivElement>(null);
 
     const { isOpen, options, onClose } = props;
 
@@ -19,11 +21,17 @@ const useMultiSelectMenu = (props: MultiSelectMenuProps, ref) => {
         }
     }, [value]);
 
-    const scrollIntoView = (args: number) => {
-      ref.current?.scrollTo({ index: args });
+    const scrollIntoView = (index: number) => {
+      if (menuDivRef.current) {
+        const menuItem = menuDivRef?.current?.children?.[index];
+        menuItem?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+        });
+      }
     };
 
-    useImperativeHandle(ref, () => ({
+    useImperativeHandle(forwardedRef, () => ({
        onMenuKeyDown: (event: KeyboardEvent) => {
           const { key } = event;
           switch (key) {
@@ -77,6 +85,7 @@ const useMultiSelectMenu = (props: MultiSelectMenuProps, ref) => {
         highlightedIndex,
         onItemSelect,
         value,
+        menuDivRef,
     };
 };
 

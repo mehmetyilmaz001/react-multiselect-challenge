@@ -1,5 +1,5 @@
 import { FC } from "react";
-import CloseIcon from "../icons/CloseIcon";
+import CloseIcon from "../../icons/CloseIcon";
 import { MultiSelectTagProps } from "./MultiSelectTag.props";
 import MultiSelectTagStyled from "./MultiSelectTag.styled";
 

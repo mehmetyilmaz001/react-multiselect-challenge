@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 
 const MultiSelectOverflowStyled = styled.div`
-    /* position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1; */
-
+    position: relative;
     display: flex;
+    flex: auto;
+    flex-wrap: wrap;
+    max-width: 100%;
     gap: 8px;
 `;
 

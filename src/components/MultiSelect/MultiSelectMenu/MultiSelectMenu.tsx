@@ -4,14 +4,15 @@ import MultiSelectMenuItem from "./MultiSelectMenuItem/MultiSelectMenuItem";
 import useMultiSelectMenu from "./MultiSelectMenu.hooks";
 import { ForwardRefRenderFunction, forwardRef } from "react";
 
-const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, ref) => {
+const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, forwardedRed) => {
     const { options = [] } = props;
 
     const { 
         highlightedIndex, 
         onItemSelect,
         value,
-    } = useMultiSelectMenu(props, ref);
+        menuDivRef
+    } = useMultiSelectMenu(props, forwardedRed);
     
     let component: React.ReactNode = <>Nothing to show here</>;
     
@@ -29,7 +30,16 @@ const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, ref) => {
         ));
     }
 
-    return <MultiSelectMenuStyled ref={ref}>{component}</MultiSelectMenuStyled>;
+    return (
+            <MultiSelectMenuStyled 
+                ref={(node) => {
+                    forwardRef(node);
+                    menuDivRef.current = node;
+                  }}
+            >
+                {component}
+            </MultiSelectMenuStyled>
+    );
 });
 
 export default MultiSelectMenu;

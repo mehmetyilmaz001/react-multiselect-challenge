@@ -7,7 +7,7 @@ const MultiSelectTrigger = (props: MultiSelectTriggerProps) => {
     const { isOpen, onClose, onOpen } = props;
 
     return (
-        <MultiSelectTriggerStyled onClick={isOpen ? onClose : onOpen}>
+        <MultiSelectTriggerStyled onClick={isOpen ? onClose : onOpen} className="trigger-icon">
             {isOpen ? <UpArrowIcon /> : <DownArrowIcon />}
         </MultiSelectTriggerStyled>
     );

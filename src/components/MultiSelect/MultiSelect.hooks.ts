@@ -15,6 +15,25 @@ export default function useMultiSelect (props: MultiSelectProps) {
     const wrapperRef = useOutsideClick(onClickOutside);
     const menuRef = useRef<MultiSelectMenuProps>();
     const inputRef = useRef<HTMLInputElement>();
+
+    useEffect(() => {
+        if(isMenuOpen) {
+            inputRef.current?.focus();
+        }
+    }, [isMenuOpen]);
+
+    const onWrapperClick = (e: React.MouseEvent<HTMLElement>) => {
+        const triggerIconRef = document.getElementsByClassName('trigger-icon');
+        const tagRef = document.getElementsByClassName('multi-select-tag');
+        console.log('%cMultiSelect.hooks.ts line:26 object', 'color: #007acc;', e.target, triggerIconRef);
+        e.preventDefault();
+        // if one of the child of  triggerIconRef is clicked, then do not open the menu
+        if(triggerIconRef?.[0]?.contains(e.target as Node) || tagRef?.[0]?.contains(e.target as Node)) {
+            return;
+        }
+        
+        inputRef.current?.focus();
+    }
   
 
     const onMenuClose = () => {
@@ -41,6 +60,7 @@ export default function useMultiSelect (props: MultiSelectProps) {
         }        
 
         if (isMenuOpen) {
+            console.log('%cMultiSelect.hooks.ts line:44 menuRef', 'color: #007acc;', menuRef);
             menuRef.current.onMenuKeyDown(e, ...rest);
         }
     }
@@ -54,6 +74,7 @@ export default function useMultiSelect (props: MultiSelectProps) {
         wrapperRef,
         menuRef,
         inputRef,
-        onKeyDown
+        onKeyDown,
+        onWrapperClick
     };
 }

@@ -2,7 +2,7 @@ import { FC, ForwardRefRenderFunction, forwardRef } from "react";
 import { MultiSelectProps } from "./MultiSelect.props";
 import MultiSelectStyled from "./MultiSelect.styled";
 import MultiSelectOverflow from "./MultiSelectOverflow/MultiSelectOverflow";
-import MultiSelectInput from "./MultiSelectInput/MultiSelectInput";
+import MultiSelectInput from "./MultiSelectOverflow/MultiSelectInput/MultiSelectInput";
 import useMultiSelect from "./MultiSelect.hooks";
 import MultiSelectMenu from "./MultiSelectMenu/MultiSelectMenu";
 import MultiSelectTrigger from "./MultiSelectTrigger/MultiSelectTrigger";
@@ -29,6 +29,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props, ref) =>
         onMenuClose,
         onMenuOpen,
         onKeyDown,
+        onWrapperClick
     } = useMultiSelect(props);
 
     return (
@@ -37,14 +38,15 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props, ref) =>
                 className={`multi-select-wrapper-${classSuffix}`} 
                 ref={wrapperRef ?? ref} 
                 onKeyDown={onKeyDown}
+                onClick={onWrapperClick}
             >
-                <MultiSelectOverflow /> 
-                <MultiSelectInput 
-                    onFocus={onInputFocus} 
-                    onChange={onInputChange} 
+                <MultiSelectOverflow 
                     placeholder={placeholder}
-                    ref={inputRef}
-                />
+                    inputRef={inputRef}
+                    onInputFocus={onInputFocus}
+                    onInputChange={onInputChange}
+                 /> 
+                
                 {isMenuOpen && <MultiSelectMenu 
                     options={options} 
                     isOpen={isMenuOpen} 

@@ -15,20 +15,20 @@ import { forwardRef } from "react";
 const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, forwardedRed) => {
     const { options = [] } = props;
 
-    const { 
-        highlightedIndex, 
+    const {
+        highlightedIndex,
         onItemSelect,
         value,
         menuDivRef
     } = useMultiSelectMenu(props, forwardedRed);
-    
+
     let component: React.ReactNode = <>Nothing to show here</>;
-    
-    if(options.length > 0) {
+
+    if (options.length > 0) {
         component = options.map((option, index) => (
-            <MultiSelectMenuItem 
-                key={option.value} 
-                value={option.value} 
+            <MultiSelectMenuItem
+                key={option.value}
+                value={option.value}
                 label={option.label}
                 highlighted={highlightedIndex === index}
                 onItemSelect={() => onItemSelect(option)}
@@ -39,14 +39,14 @@ const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, forwardedRe
     }
 
     return (
-            <MultiSelectMenuStyled 
-                ref={(node) => {
-                    forwardRef(node);
-                    menuDivRef.current = node;
-                  }}
-            >
-                {component}
-            </MultiSelectMenuStyled>
+        <MultiSelectMenuStyled
+            ref={(node) => {
+                forwardRef(node);
+                menuDivRef.current = node;
+            }}
+        >
+            {component}
+        </MultiSelectMenuStyled>
     );
 });
 

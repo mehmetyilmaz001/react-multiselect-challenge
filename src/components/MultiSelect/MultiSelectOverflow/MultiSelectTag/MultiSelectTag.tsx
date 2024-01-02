@@ -5,7 +5,7 @@ import MultiSelectTagStyled from "./MultiSelectTag.styled";
 
 const classPrefix = 'multi-select-tag';
 
-const MultiSelectTag: FC<MultiSelectTagProps> = ({label, onRemove, className = classPrefix}) => {
+const MultiSelectTag: FC<MultiSelectTagProps> = ({ label, onRemove, className = classPrefix }) => {
     return (
         <MultiSelectTagStyled className={className}>
             <div className="label">{label}</div>

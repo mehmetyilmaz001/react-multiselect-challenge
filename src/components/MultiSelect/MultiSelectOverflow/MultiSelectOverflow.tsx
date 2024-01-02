@@ -14,20 +14,20 @@ import MultiSelectInput from "./MultiSelectInput/MultiSelectInput";
  */
 const MultiSelectOverflow: FC<MultiSelectOverflowProps> = (props) => {
     const { placeholder, inputRef, onInputFocus, onInputChange } = props;
-    const { value, onRemoveItem } = useMultiSelectOverflow();
-    
+    const { value, onRemoveItem } = useMultiSelectOverflow();
+
     return (
         <MultiSelectOverflowStyled className="overflow-wrapper">
             {value.map((option) => (
-                <MultiSelectTag 
-                    key={option.value} 
-                    label={option.label} 
-                    onRemove={() => onRemoveItem(option)} 
+                <MultiSelectTag
+                    key={option.value}
+                    label={option.label}
+                    onRemove={() => onRemoveItem(option)}
                 />
             ))}
-            <MultiSelectInput 
-                onFocus={onInputFocus} 
-                onChange={onInputChange} 
+            <MultiSelectInput
+                onFocus={onInputFocus}
+                onChange={onInputChange}
                 placeholder={placeholder}
                 ref={inputRef}
             />

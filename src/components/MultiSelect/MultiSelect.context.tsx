@@ -10,10 +10,10 @@ export interface IMultiSelectContext {
 
 export const MultiSelectContext = createContext<IMultiSelectContext>({
     value: [],
-    setValue: () => {},
+    setValue: () => { },
 });
 /* Context End */
- 
+
 
 interface MultiSelectProviderProps {
     children?: React.ReactNode;
@@ -21,16 +21,23 @@ interface MultiSelectProviderProps {
     onChange?: (value: MultiSelectOption[]) => void;
 }
 
-const MultiSelectProvider: FC<MultiSelectProviderProps> = ({children, initialValue, onChange}) => {
+/**
+ * Provides context for the MultiSelect component.
+ *
+ * @component
+ * @param {ReactNode} children - The child components to be wrapped by the provider.
+ * @param {MultiSelectOption[]} initialValue - The initial value of the MultiSelect component.
+ * @param {Function} onChange - The callback function to be called when the value of the MultiSelect component changes.
+ */
+const MultiSelectProvider: FC<MultiSelectProviderProps> = ({ children, initialValue, onChange }) => {
     const [value, setValue] = useState<MultiSelectOption[]>(initialValue);
 
     useUpdateEffect(() => {
-        console.log('%cMultiSelect.context.tsx line:28 value', 'color: #007acc;', initialValue.length, value.length);
         onChange?.(value);
     }, [value.length]);
-    
+
     return (
-        <MultiSelectContext.Provider value={{value, setValue}}>
+        <MultiSelectContext.Provider value={{ value, setValue }}>
             {children}
         </MultiSelectContext.Provider>
     )

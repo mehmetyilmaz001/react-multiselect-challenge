@@ -7,7 +7,7 @@ const useMultiSelectOverflow = () => {
     const onRemoveItem = (item) => {
         setValue(value.filter((value) => value !== item));
     }
-    
+
     return { value, onRemoveItem };
 }
 

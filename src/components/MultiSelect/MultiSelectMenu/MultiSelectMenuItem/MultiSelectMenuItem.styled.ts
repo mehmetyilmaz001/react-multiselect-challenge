@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const MultiSelectMenuItemStyled = styled.div<{$highlighted: boolean}>`
+const MultiSelectMenuItemStyled = styled.div<{ $highlighted: boolean }>`
     flex-direction: column;
     justify-content: center;
     min-height: 48px;

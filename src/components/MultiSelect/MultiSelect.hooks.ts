@@ -1,4 +1,4 @@
-import { ElementRef, FormEventHandler, KeyboardEventHandler, MouseEventHandler, Ref, useContext, useEffect, useRef, useState } from "react";
+import { FormEventHandler, KeyboardEventHandler, useEffect, useRef, useState } from "react";
 import { MultiSelectProps } from "./MultiSelect.props";
 import { KEY_CODES } from "./MultiSelect.consts";
 import { MultiSelectMenuProps } from "./MultiSelectMenu/MultiSelectMenu.props";
@@ -9,8 +9,8 @@ import { useOutsideClick } from "./shared/hooks";
  * 
  * @param props - The props for the MultiSelect component.
  */
-export default function useMultiSelect (props: MultiSelectProps) {
- 
+export default function useMultiSelect(props: MultiSelectProps) {
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 
@@ -22,7 +22,7 @@ export default function useMultiSelect (props: MultiSelectProps) {
     const inputRef = useRef<HTMLInputElement>();
 
     useEffect(() => {
-        if(isMenuOpen) {
+        if (isMenuOpen) {
             inputRef.current?.focus();
         }
     }, [isMenuOpen]);
@@ -37,13 +37,13 @@ export default function useMultiSelect (props: MultiSelectProps) {
         const tagRef = document.getElementsByClassName('multi-select-tag');
         e.preventDefault();
         // if one of the child of  triggerIconRef is clicked, then do not open the menu
-        if(triggerIconRef?.[0]?.contains(e.target as Node) || tagRef?.[0]?.contains(e.target as Node)) {
+        if (triggerIconRef?.[0]?.contains(e.target as Node) || tagRef?.[0]?.contains(e.target as Node)) {
             return;
         }
-        
+
         inputRef.current?.focus();
     }
-  
+
 
     const onMenuClose = () => {
         setIsMenuOpen(false);
@@ -69,13 +69,12 @@ export default function useMultiSelect (props: MultiSelectProps) {
      * @param rest - Additional arguments.
      */
     const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (e, ...rest) => {
-        if([KEY_CODES.ESC].includes(e.key)) {
+        if ([KEY_CODES.ESC].includes(e.key)) {
             e.preventDefault();
             onMenuClose();
-        }        
+        }
 
         if (isMenuOpen) {
-            console.log('%cMultiSelect.hooks.ts line:44 menuRef', 'color: #007acc;', menuRef);
             menuRef.current.onMenuKeyDown(e, ...rest);
         }
     }

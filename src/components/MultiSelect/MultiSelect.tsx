@@ -8,6 +8,14 @@ import MultiSelectMenu from "./MultiSelectMenu/MultiSelectMenu";
 import MultiSelectTrigger from "./MultiSelectTrigger/MultiSelectTrigger";
 import MultiSelectProvider from "./MultiSelect.context";
 
+/**
+ * A custom multi-select component.
+ *
+ * @component
+ * @param {MultiSelectProps} props - The props for the MultiSelect component.
+ * @param {React.Ref<HTMLDivElement>} ref - The ref for the MultiSelect component.
+ * @returns {JSX.Element} The rendered MultiSelect component.
+ */
 const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props, ref) => {
 
     const { 

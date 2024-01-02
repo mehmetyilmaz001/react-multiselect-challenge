@@ -5,6 +5,13 @@ import { MultiSelectOverflowProps } from "./MultiSelectOverflow.props";
 import MultiSelectOverflowStyled from "./MultiSelectOverflow.styled";
 import MultiSelectInput from "./MultiSelectInput/MultiSelectInput";
 
+/**
+ * Component for handling overflow in a multi-select dropdown.
+ *
+ * @component
+ * @param {MultiSelectOverflowProps} props - The props for the MultiSelectOverflow component.
+ * @returns {JSX.Element} - The rendered MultiSelectOverflow component.
+ */
 const MultiSelectOverflow: FC<MultiSelectOverflowProps> = (props) => {
     const { placeholder, inputRef, onInputFocus, onInputChange } = props;
     const { value, onRemoveItem } = useMultiSelectOverflow();

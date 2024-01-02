@@ -2,8 +2,16 @@ import { MultiSelectMenuProps } from "./MultiSelectMenu.props";
 import MultiSelectMenuStyled from "./MultiSelectMenu.styled";
 import MultiSelectMenuItem from "./MultiSelectMenuItem/MultiSelectMenuItem";
 import useMultiSelectMenu from "./MultiSelectMenu.hooks";
-import { ForwardRefRenderFunction, forwardRef } from "react";
+import { forwardRef } from "react";
 
+/**
+ * MultiSelectMenu component.
+ *
+ * @component
+ * @param {MultiSelectMenuProps} props - The props for the MultiSelectMenu component.
+ * @param {React.Ref<{}>} forwardedRef - The ref to forward to the underlying component.
+ * @returns {React.ReactElement} The rendered MultiSelectMenu component.
+ */
 const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, forwardedRed) => {
     const { options = [] } = props;
 

@@ -4,6 +4,13 @@ import { KEY_CODES } from "../MultiSelect.consts";
 import { MultiSelectOption } from "../MultiSelect.props";
 import { MultiSelectContext } from "../MultiSelect.context";
 
+/**
+ * Custom hook for the MultiSelectMenu component.
+ * 
+ * @param props - The props for the MultiSelectMenu component.
+ * @param forwardedRef - The ref forwarded to the MultiSelectMenu component.
+ * @returns An object containing the necessary values and functions for the MultiSelectMenu component.
+ */
 const useMultiSelectMenu = (props: MultiSelectMenuProps, forwardedRef) => {
 
     const menuDivRef = useRef<HTMLDivElement>(null);
@@ -13,6 +20,11 @@ const useMultiSelectMenu = (props: MultiSelectMenuProps, forwardedRef) => {
     const {value, setValue} = useContext(MultiSelectContext)
     const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
 
+    /**
+     * Callback function that is called when an item is selected in the MultiSelectMenu.
+     * 
+     * @param item - The selected item.
+     */
     const onItemSelect = useCallback((item: MultiSelectOption) => {
         if(value.map(v => v.value).includes(item.value)) {
             setValue(value.filter((v) => v.value !== item.value));
@@ -21,6 +33,11 @@ const useMultiSelectMenu = (props: MultiSelectMenuProps, forwardedRef) => {
         }
     }, [value]);
 
+    /**
+     * Scrolls the element at the specified index into view.
+     * 
+     * @param index - The index of the element to scroll into view.
+     */
     const scrollIntoView = (index: number) => {
       if (menuDivRef.current) {
         const menuItem = menuDivRef?.current?.children?.[index];
@@ -31,6 +48,12 @@ const useMultiSelectMenu = (props: MultiSelectMenuProps, forwardedRef) => {
       }
     };
 
+    /**
+     * Custom hook that allows a parent component to imperatively call functions on the MultiSelectMenu component.
+     * 
+     * @param forwardedRef - A ref object that is passed from the parent component.
+     * @returns An object with functions that can be called imperatively on the MultiSelectMenu component.
+     */
     useImperativeHandle(forwardedRef, () => ({
        onMenuKeyDown: (event: KeyboardEvent) => {
           const { key } = event;

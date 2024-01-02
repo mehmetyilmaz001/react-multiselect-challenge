@@ -1,6 +1,10 @@
 import { MultiSelectMenuItemProps } from "./MultiSelectMenuItem.props";
 import MultiSelectMenuItemStyled from "./MultiSelectMenuItem.styled";
 
+/**
+ * Represents a single item in the MultiSelectMenu component.
+ * @param props - The props for the MultiSelectMenuItem component.
+ */
 const MultiSelectMenuItem = (props: MultiSelectMenuItemProps) => {
     const { label, onItemSelect, highlighted, isSelected } = props;
     return (

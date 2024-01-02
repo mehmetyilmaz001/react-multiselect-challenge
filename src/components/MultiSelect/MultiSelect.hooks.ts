@@ -4,6 +4,11 @@ import { KEY_CODES } from "./MultiSelect.consts";
 import { MultiSelectMenuProps } from "./MultiSelectMenu/MultiSelectMenu.props";
 import { useOutsideClick } from "./shared/hooks";
 
+/**
+ * Custom hook for the MultiSelect component.
+ * 
+ * @param props - The props for the MultiSelect component.
+ */
 export default function useMultiSelect (props: MultiSelectProps) {
  
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,10 +27,14 @@ export default function useMultiSelect (props: MultiSelectProps) {
         }
     }, [isMenuOpen]);
 
+    /**
+     * Handles the click event on the wrapper element.
+     * 
+     * @param e - The mouse event object.
+     */
     const onWrapperClick = (e: React.MouseEvent<HTMLElement>) => {
         const triggerIconRef = document.getElementsByClassName('trigger-icon');
         const tagRef = document.getElementsByClassName('multi-select-tag');
-        console.log('%cMultiSelect.hooks.ts line:26 object', 'color: #007acc;', e.target, triggerIconRef);
         e.preventDefault();
         // if one of the child of  triggerIconRef is clicked, then do not open the menu
         if(triggerIconRef?.[0]?.contains(e.target as Node) || tagRef?.[0]?.contains(e.target as Node)) {
@@ -53,6 +62,12 @@ export default function useMultiSelect (props: MultiSelectProps) {
         console.log('onInputChange', e.currentTarget.value);
     }
 
+    /**
+     * Handles the keydown event for the MultiSelect component.
+     * 
+     * @param e - The keyboard event.
+     * @param rest - Additional arguments.
+     */
     const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (e, ...rest) => {
         if([KEY_CODES.ESC].includes(e.key)) {
             e.preventDefault();

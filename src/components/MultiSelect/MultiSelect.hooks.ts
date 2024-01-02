@@ -10,9 +10,7 @@ import { useOutsideClick } from "./shared/hooks";
  * @param props - The props for the MultiSelect component.
  */
 export default function useMultiSelect(props: MultiSelectProps) {
-
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
 
     const onClickOutside = () => {
         onMenuClose();
@@ -58,10 +56,7 @@ export default function useMultiSelect(props: MultiSelectProps) {
         onMenuOpen();
     }
 
-    const onInputChange: FormEventHandler<HTMLInputElement> = (e) => {
-        console.log('onInputChange', e.currentTarget.value);
-    }
-
+ 
     /**
      * Handles the keydown event for the MultiSelect component.
      * 
@@ -81,7 +76,6 @@ export default function useMultiSelect(props: MultiSelectProps) {
 
     return {
         onInputFocus,
-        onInputChange,
         isMenuOpen,
         onMenuClose,
         onMenuOpen,

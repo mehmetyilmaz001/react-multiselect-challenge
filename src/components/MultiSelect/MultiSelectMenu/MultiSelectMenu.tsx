@@ -13,19 +13,19 @@ import { forwardRef } from "react";
  * @returns {React.ReactElement} The rendered MultiSelectMenu component.
  */
 const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, forwardedRed) => {
-    const { options = [] } = props;
 
     const {
         highlightedIndex,
         onItemSelect,
         value,
-        menuDivRef
+        menuDivRef,
+        filteredOptions,
     } = useMultiSelectMenu(props, forwardedRed);
 
     let component: React.ReactNode = <>Nothing to show here</>;
 
-    if (options.length > 0) {
-        component = options.map((option, index) => (
+    if (filteredOptions.length > 0) {
+        component = filteredOptions.map((option, index) => (
             <MultiSelectMenuItem
                 key={option.value}
                 value={option.value}

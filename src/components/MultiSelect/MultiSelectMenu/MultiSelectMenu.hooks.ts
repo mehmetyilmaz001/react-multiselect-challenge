@@ -2,7 +2,7 @@ import { createRef, useCallback, useContext, useEffect, useImperativeHandle, use
 import { MultiSelectMenuProps } from "./MultiSelectMenu.props";
 import { KEY_CODES } from "../MultiSelect.consts";
 import { MultiSelectOption } from "../MultiSelect.props";
-import { MultiSelectContext } from "../MultiSelect.context";
+import { MultiSelectContext, useMultiSelectContext } from "../MultiSelect.context";
 
 /**
  * Custom hook for the MultiSelectMenu component.
@@ -15,23 +15,10 @@ const useMultiSelectMenu = (props: MultiSelectMenuProps, forwardedRef) => {
 
   const menuDivRef = useRef<HTMLDivElement>(null);
 
-  const { isOpen, options, onClose } = props;
+  const { isOpen, onClose } = props;
 
-  const { value, setValue } = useContext(MultiSelectContext)
+  const { value, onItemSelect, filteredOptions } = useMultiSelectContext()
   const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
-
-  /**
-   * Callback function that is called when an item is selected in the MultiSelectMenu.
-   * 
-   * @param item - The selected item.
-   */
-  const onItemSelect = useCallback((item: MultiSelectOption) => {
-    if (value.map(v => v.value).includes(item.value)) {
-      setValue(value.filter((v) => v.value !== item.value));
-    } else {
-      setValue([...value, item]);
-    }
-  }, [value]);
 
   /**
    * Scrolls the element at the specified index into view.
@@ -59,7 +46,7 @@ const useMultiSelectMenu = (props: MultiSelectMenuProps, forwardedRef) => {
       const { key } = event;
       switch (key) {
         case KEY_CODES.DOWN_ARROW:
-          if (highlightedIndex === options.length - 1) {
+          if (highlightedIndex === filteredOptions.length - 1) {
             setHighlightedIndex(0);
           } else {
             setHighlightedIndex((prevIndex) => prevIndex + 1);
@@ -68,7 +55,7 @@ const useMultiSelectMenu = (props: MultiSelectMenuProps, forwardedRef) => {
           break;
         case KEY_CODES.UP_ARROW:
           if (highlightedIndex === 0) {
-            setHighlightedIndex(options.length - 1);
+            setHighlightedIndex(filteredOptions.length - 1);
           } else {
             setHighlightedIndex((prevIndex) => prevIndex - 1);
           }
@@ -76,7 +63,7 @@ const useMultiSelectMenu = (props: MultiSelectMenuProps, forwardedRef) => {
           break;
 
         case KEY_CODES.ENTER: {
-          const item = options[highlightedIndex];
+          const item = filteredOptions[highlightedIndex];
 
           if (item) {
             onItemSelect(item);
@@ -109,6 +96,7 @@ const useMultiSelectMenu = (props: MultiSelectMenuProps, forwardedRef) => {
     onItemSelect,
     value,
     menuDivRef,
+    filteredOptions,
   };
 };
 

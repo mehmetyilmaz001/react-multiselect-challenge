@@ -28,7 +28,6 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props, ref) =>
 
     const {
         onInputFocus,
-        onInputChange,
         isMenuOpen,
         wrapperRef,
         menuRef,
@@ -40,7 +39,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props, ref) =>
     } = useMultiSelect(props);
 
     return (
-        <MultiSelectProvider initialValue={value} onChange={onChange}>
+        <MultiSelectProvider initialValue={value} onChange={onChange} initialOptions={options}>
             <MultiSelectStyled
                 className={`multi-select-wrapper-${classSuffix}`}
                 ref={wrapperRef ?? ref}
@@ -51,11 +50,9 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props, ref) =>
                     placeholder={placeholder}
                     inputRef={inputRef}
                     onInputFocus={onInputFocus}
-                    onInputChange={onInputChange}
                 />
 
                 {isMenuOpen && <MultiSelectMenu
-                    options={options}
                     isOpen={isMenuOpen}
                     ref={menuRef}
                     onClose={onMenuClose}

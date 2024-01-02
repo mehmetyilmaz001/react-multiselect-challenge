@@ -1,12 +1,7 @@
-import { useContext } from "react";
-import { MultiSelectContext } from "../MultiSelect.context";
+import { useMultiSelectContext } from "../MultiSelect.context";
 
 const useMultiSelectOverflow = () => {
-    const { value, setValue } = useContext(MultiSelectContext);
-
-    const onRemoveItem = (item) => {
-        setValue(value.filter((value) => value !== item));
-    }
+    const { value, onRemoveItem } = useMultiSelectContext();
 
     return { value, onRemoveItem };
 }

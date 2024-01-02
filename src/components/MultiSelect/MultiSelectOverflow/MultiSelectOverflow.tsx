@@ -27,7 +27,6 @@ const MultiSelectOverflow: FC<MultiSelectOverflowProps> = (props) => {
             ))}
             <MultiSelectInput
                 onFocus={onInputFocus}
-                onChange={onInputChange}
                 placeholder={placeholder}
                 ref={inputRef}
             />

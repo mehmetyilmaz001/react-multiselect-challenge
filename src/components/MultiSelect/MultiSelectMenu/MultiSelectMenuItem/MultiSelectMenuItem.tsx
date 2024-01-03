@@ -7,7 +7,7 @@ import MultiSelectMenuItemStyled from "./MultiSelectMenuItem.styled";
  * @param props - The props for the MultiSelectMenuItem component.
  */
 const MultiSelectMenuItem = (props: MultiSelectMenuItemProps) => {
-    const { onItemSelect, highlighted, isSelected } = props;
+    const { onItemSelect, highlighted, isSelected, option } = props;
     const { labelHandled } = useMultiSelectMenuItem(props);
     return (
         <MultiSelectMenuItemStyled 
@@ -19,7 +19,12 @@ const MultiSelectMenuItem = (props: MultiSelectMenuItemProps) => {
         >
             <label>
                 <input type="checkbox" checked={isSelected} readOnly />
-                <div dangerouslySetInnerHTML={{__html: labelHandled}} />
+                {option.image && <img src={option.image} alt={option.label} />}
+
+                <div className="text-container">
+                    <div className="label" dangerouslySetInnerHTML={{__html: labelHandled}} />
+                    {option.description && <div className="description">{option.description}</div> }
+                </div>
             </label>
         </MultiSelectMenuItemStyled>
     );

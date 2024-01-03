@@ -1,8 +1,9 @@
 import { FC } from 'react';
 
-import './style.css';
 import MultiSelect from './components/MultiSelect/MultiSelect';
 import useAppHook from './App.hooks';
+
+import './style.css';
 
 export const App: FC = () => {
 

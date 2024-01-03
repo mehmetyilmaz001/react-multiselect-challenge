@@ -2,7 +2,7 @@ import { useMultiSelectContext } from "../../MultiSelect.context";
 import { MultiSelectMenuItemProps } from "./MultiSelectMenuItem.props";
 
 const useMultiSelectMenuItem = (props: MultiSelectMenuItemProps) => {
-    const { label } = props;
+    const { option: { label } } = props;
     const { searchText } = useMultiSelectContext();
 
     // mark as bold the part of the label that matches the search text. we should keep the original case

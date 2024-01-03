@@ -15,7 +15,12 @@ const useAppHook = () => {
 
             const res = await filterChar(searchText);
             const optionsFromApi = (res?.results || [])?.map((item: Char): MultiSelectOption => {
-                return { label: item.name, value: item.id.toString() };
+                return { 
+                    label: item.name, 
+                    value: item.id.toString(), 
+                    image: item.image, 
+                    description: `${item.episode.length} Episodes`
+                };
             });
             setOptions(optionsFromApi);
             setError(undefined);

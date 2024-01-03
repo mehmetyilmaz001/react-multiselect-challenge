@@ -2,6 +2,8 @@ import { JSX } from 'react';
 export interface MultiSelectOption {
     label: string;
     value: string;
+    image?: string;
+    description?: string;
 }
 
 export interface MultiSelectProps {

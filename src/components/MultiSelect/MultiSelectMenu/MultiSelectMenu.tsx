@@ -30,8 +30,7 @@ const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, forwardedRe
         component = filteredOptions.map((option, index) => (
             <MultiSelectMenuItem
                 key={option.value}
-                value={option.value}
-                label={option.label}
+                option={option}
                 highlighted={highlightedIndex === index}
                 onItemSelect={() => onItemSelect(option)}
                 isSelected={value.map(v => v.value).includes(option.value)}

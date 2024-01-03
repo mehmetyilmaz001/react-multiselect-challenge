@@ -4,7 +4,7 @@ const MultiSelectInputStyled = styled.input`
     border: none;
     font-size: 16px;
     font-weight: 600;
-    height: 60px;
+    height: 40px;
 
     &:focus {
         outline: none;

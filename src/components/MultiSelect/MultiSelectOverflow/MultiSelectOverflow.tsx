@@ -13,7 +13,7 @@ import MultiSelectInput from "./MultiSelectInput/MultiSelectInput";
  * @returns {JSX.Element} - The rendered MultiSelectOverflow component.
  */
 const MultiSelectOverflow: FC<MultiSelectOverflowProps> = (props) => {
-    const { placeholder, inputRef, onInputFocus, onInputChange } = props;
+    const { placeholder, inputRef, onInputFocus, onSearch, debounceTime } = props;
     const { value, onRemoveItem } = useMultiSelectOverflow();
 
     return (
@@ -29,6 +29,8 @@ const MultiSelectOverflow: FC<MultiSelectOverflowProps> = (props) => {
                 onFocus={onInputFocus}
                 placeholder={placeholder}
                 ref={inputRef}
+                onSearch={onSearch}
+                debounceTime={debounceTime}
             />
         </MultiSelectOverflowStyled>
     );

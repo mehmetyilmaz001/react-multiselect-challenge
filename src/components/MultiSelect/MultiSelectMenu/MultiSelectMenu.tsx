@@ -24,6 +24,8 @@ const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, forwardedRe
 
     let component: React.ReactNode = <NoResultStyled>Nothing to show here</NoResultStyled>;
 
+    console.log('%cMultiSelectMenu.tsx line:27 filteredOptions', 'color: #007acc;', filteredOptions);
+
     if (filteredOptions.length > 0) {
         component = filteredOptions.map((option, index) => (
             <MultiSelectMenuItem

@@ -6,7 +6,7 @@ const MultiSelectTagStyled = styled.div`
     align-items: center;
     justify-content: center;
     width: max-content;
-    height: 60px;
+    height: 40px;
     padding: 0 16px;
     border-radius: 12px;
     background-color: #E2E8F0;
@@ -23,8 +23,8 @@ const MultiSelectTagStyled = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 44px;
-        height: 44px;
+        width: 20px;
+        height: 20px;
         padding: 0;
         border: none;
         border-radius: 12px;

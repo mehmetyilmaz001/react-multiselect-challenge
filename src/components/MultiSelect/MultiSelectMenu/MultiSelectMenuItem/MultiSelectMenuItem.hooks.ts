@@ -8,8 +8,12 @@ const useMultiSelectMenuItem = (props: MultiSelectMenuItemProps) => {
     // mark as bold the part of the label that matches the search text. we should keep the original case
     // so we will use the original label to find the index of the search text and then use the original label
     // to replace the search text with the bolded search text
-    const index = label.toLowerCase().indexOf(searchText.toLowerCase());
-    const labelHandled = label.substring(0, index) + `<b>${label.substring(index, index + searchText.length)}</b>` + label.substring(index + searchText.length);
+    let labelHandled = label;
+
+    if (searchText) {
+        const index = label.toLowerCase().indexOf(searchText.toLowerCase());
+        labelHandled = label.substring(0, index) + `<b>${label.substring(index, index + searchText.length)}</b>` + label.substring(index + searchText.length);
+    }
 
     return {
         labelHandled

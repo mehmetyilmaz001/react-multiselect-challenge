@@ -42,7 +42,7 @@ interface MultiSelectProviderProps {
  * @param {MultiSelectOption[]} initialValue - The initial value of the MultiSelect component.
  * @param {Function} onChange - The callback function to be called when the value of the MultiSelect component changes.
  */
-const MultiSelectProvider: FC<MultiSelectProviderProps> = ({ children, initialValue, onChange, initialOptions }) => {
+const MultiSelectProvider: FC<MultiSelectProviderProps> = ({ children, initialValue = [], onChange, initialOptions }) => {
     const [value, setValue] = useState<MultiSelectOption[]>(initialValue);
     const [options, setOptions] = useState<MultiSelectOption[]>(initialOptions);
     const [filteredOptions, setFilteredOptions] = useState<MultiSelectOption[]>(initialOptions);
@@ -50,7 +50,12 @@ const MultiSelectProvider: FC<MultiSelectProviderProps> = ({ children, initialVa
 
     useUpdateEffect(() => {
         onChange?.(value);
-    }, [value.length]);
+    }, [value?.length]);
+
+    useEffect(() => {
+        setOptions(initialOptions);
+        setFilteredOptions(initialOptions);
+    }, [initialOptions?.length]);
 
     return (
         <MultiSelectContext.Provider 
@@ -72,7 +77,8 @@ const MultiSelectProvider: FC<MultiSelectProviderProps> = ({ children, initialVa
 export default MultiSelectProvider;
 
 export const useMultiSelectContext = () => {
-    const { value,
+    const { 
+        value,
         setValue,
         options,
         filteredOptions,
@@ -99,13 +105,8 @@ export const useMultiSelectContext = () => {
     }
 
 
-    const onSearchChange = debounce((value: string) => {
-        // search for value in the options
-        // if found, filter the options
-        setSearchText(value);
-
+    const onInnerSearch = (value: string) => {
         if (value) {
-            console.log('%cMultiSelect.context.tsx line:94 options', 'color: #007acc;', options);
             const filteredOptionsInner = options.filter((option) => option.label.toLowerCase().includes(value.toLowerCase()));
             setFilteredOptions(filteredOptionsInner);
 
@@ -113,15 +114,16 @@ export const useMultiSelectContext = () => {
             setFilteredOptions(options);
         }
 
-    }, 500);
+    };
 
     return { 
             value, 
             setValue, 
-            onSearchChange, 
+            onInnerSearch, 
             onItemSelect, 
             onRemoveItem, 
             filteredOptions,
             searchText,
+            setSearchText
      };
 }

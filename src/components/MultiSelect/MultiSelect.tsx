@@ -24,6 +24,10 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props, ref) =>
         optionRenderer,
         classSuffix = 'multi-select',
         onChange,
+        onSearch,
+        debounceTime,
+        isLoading,
+        err,
     } = props;
 
     const {
@@ -45,11 +49,15 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props, ref) =>
                 ref={wrapperRef ?? ref}
                 onKeyDown={onKeyDown}
                 onClick={onWrapperClick}
+                $hasError={!!err}
+
             >
                 <MultiSelectOverflow
                     placeholder={placeholder}
                     inputRef={inputRef}
                     onInputFocus={onInputFocus}
+                    onSearch={onSearch}
+                    debounceTime={debounceTime}
                 />
 
                 {isMenuOpen && <MultiSelectMenu
@@ -57,11 +65,15 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props, ref) =>
                     ref={menuRef}
                     onClose={onMenuClose}
                 />}
-                <MultiSelectTrigger
-                    isOpen={isMenuOpen}
-                    onClose={onMenuClose}
-                    onOpen={onMenuOpen}
-                />
+
+                {err && <div className="error">{err}</div>}
+                {isLoading ? <div>Loading...</div> :
+                    <MultiSelectTrigger
+                        isOpen={isMenuOpen}
+                        onClose={onMenuClose}
+                        onOpen={onMenuOpen}
+                    />
+                }
             </MultiSelectStyled>
         </MultiSelectProvider>
     );

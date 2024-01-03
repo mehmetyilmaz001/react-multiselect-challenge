@@ -1,4 +1,4 @@
-import { MultiSelectOption } from "../MultiSelect.props";
+import { MultiSelectOption, MultiSelectProps } from "../MultiSelect.props";
 
 export interface MultiSelectOverflowProps extends React.HTMLAttributes<HTMLDivElement> {
     onRemoveItem?: (option: MultiSelectOption) => void;
@@ -6,4 +6,6 @@ export interface MultiSelectOverflowProps extends React.HTMLAttributes<HTMLDivEl
     inputRef?: React.Ref<HTMLInputElement>;
     onInputFocus?: React.FocusEventHandler<HTMLInputElement>;
     onInputChange?: React.FormEventHandler<HTMLInputElement>;
+    onSearch?: MultiSelectProps['onSearch'];
+    debounceTime?: MultiSelectProps['debounceTime'];
 }

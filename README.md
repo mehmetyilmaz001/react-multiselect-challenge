@@ -6,7 +6,7 @@ This is the solution to the challenge for the React Multiselect component.
 
 Preview: 
 
-![Preview](https://raw.githubusercontent.com/mehmetyilmaz001/mozio-challenge-ui/main/public/react-multi-select.png?raw=true)
+![Preview](https://raw.githubusercontent.com/mehmetyilmaz001/react-multiselect-challenge/main/public/react-multi-select.png)
 
 
 

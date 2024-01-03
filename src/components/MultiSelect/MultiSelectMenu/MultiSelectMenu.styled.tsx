@@ -5,7 +5,7 @@ const MultiSelectMenuStyled = styled.div`
     flex-direction: column;
 
     position: absolute;
-    top: 120%;
+    top: calc(100% + 10px);
     left: 0;
     width: 100%;
     max-height: 300px;

@@ -113,8 +113,12 @@ export const useMultiSelectContext = () => {
         } else {
             setFilteredOptions(options);
         }
-
     };
+
+    const removeLastItem = () => {
+        const lastItem = value[value.length - 1];
+        onRemoveItem(lastItem);
+    }
 
     return { 
             value, 
@@ -124,6 +128,7 @@ export const useMultiSelectContext = () => {
             onRemoveItem, 
             filteredOptions,
             searchText,
-            setSearchText
+            setSearchText,
+            removeLastItem
      };
 }

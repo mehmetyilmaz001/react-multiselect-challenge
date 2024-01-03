@@ -50,7 +50,6 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props, ref) =>
                 onKeyDown={onKeyDown}
                 onClick={onWrapperClick}
                 $hasError={!!err}
-
             >
                 <MultiSelectOverflow
                     placeholder={placeholder}

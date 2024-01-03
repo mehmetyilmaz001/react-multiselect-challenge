@@ -4,7 +4,7 @@ import { MultiSelectInputProps } from "./MultiSelectInput.props";
 import debounce from "lodash.debounce";
 
 export const useMultiSelectInput = (props: MultiSelectInputProps) => {
-    const { onInnerSearch, setSearchText } = useMultiSelectContext();
+    const { onInnerSearch, setSearchText, removeLastItem } = useMultiSelectContext();
 
     const onInputChange: FormEventHandler<HTMLInputElement> = debounce((e) => {
         const value = e?.target?.value;
@@ -16,7 +16,14 @@ export const useMultiSelectInput = (props: MultiSelectInputProps) => {
         onInnerSearch(value);
     }, props.debounceTime || 100);
 
+    const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Backspace' && !e.currentTarget.value) {
+            removeLastItem()
+        }
+    }
+
     return {
-        onInputChange
+        onInputChange,
+        onKeyDown
     }
 }

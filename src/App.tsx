@@ -1,43 +1,17 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 import './style.css';
 import MultiSelect from './components/MultiSelect/MultiSelect';
-import { filterChar } from './services/filterChar/filterChar';
-import { MultiSelectOption } from './components/MultiSelect/MultiSelect.props';
-import { Char } from './services/filterChar/models/FilterCharResponse';
+import useAppHook from './App.hooks';
 
 export const App: FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState<MultiSelectOption[]>([]);
-  const [err, setError] = useState<string>();
 
-  const onSearch = async (searchText: string) => {
-    
-    try {
-      setIsLoading(true);
-      
-      const res = await filterChar(searchText);
-      const optionsFromApi = (res?.results || [])?.map((item: Char): MultiSelectOption => {
-        return { label: item.name, value: item.id.toString() };
-      });
-      setOptions(optionsFromApi);
-      setError(undefined);
-
-    } catch (err) {
-      setError(err.message);
-      setOptions([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  const { isLoading, options, err, onSearch, onChange, selectedOptions } = useAppHook();
 
   return (
     <div>
       <MultiSelect
-        onChange={(value) => {
-          console.log("Changed Values:", value);
-        }}
+        onChange={onChange}
         options={options}
         onSearch={onSearch}
         debounceTime={500}
@@ -45,6 +19,18 @@ export const App: FC = () => {
         isLoading={isLoading}
         err={err}
       />
+
+      <hr />
+
+      <div>
+        <h3>Selected Options:</h3>
+        <ul>
+          {selectedOptions.map((item) => (
+            <li key={item.value}>{item.label}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
+
 };

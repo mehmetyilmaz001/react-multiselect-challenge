@@ -18,7 +18,7 @@ const MultiSelectMenuItem = (props: MultiSelectMenuItemProps) => {
             $highlighted={highlighted}
         >
             <label>
-                <input type="checkbox" checked={isSelected} />
+                <input type="checkbox" checked={isSelected} readOnly />
                 <div dangerouslySetInnerHTML={{__html: labelHandled}} />
             </label>
         </MultiSelectMenuItemStyled>

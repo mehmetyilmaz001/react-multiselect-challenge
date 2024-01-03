@@ -116,6 +116,9 @@ export const useMultiSelectContext = () => {
     };
 
     const removeLastItem = () => {
+        if (!value.length) {
+            return;
+        }
         const lastItem = value[value.length - 1];
         onRemoveItem(lastItem);
     }

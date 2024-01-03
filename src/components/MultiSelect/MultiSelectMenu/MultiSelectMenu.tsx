@@ -12,7 +12,7 @@ import { forwardRef } from "react";
  * @param {React.Ref<{}>} forwardedRef - The ref to forward to the underlying component.
  * @returns {React.ReactElement} The rendered MultiSelectMenu component.
  */
-const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, forwardedRed) => {
+const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, forwardedRef) => {
 
     const {
         highlightedIndex,
@@ -20,7 +20,7 @@ const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, forwardedRe
         value,
         menuDivRef,
         filteredOptions,
-    } = useMultiSelectMenu(props, forwardedRed);
+    } = useMultiSelectMenu(props, forwardedRef);
 
     let component: React.ReactNode = <NoResultStyled>Nothing to show here</NoResultStyled>;
 
@@ -43,7 +43,7 @@ const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, forwardedRe
     return (
         <MultiSelectMenuStyled
             ref={(node) => {
-                forwardRef(node);
+                forwardedRef = node;
                 menuDivRef.current = node;
             }}
         >

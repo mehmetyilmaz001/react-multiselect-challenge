@@ -1,5 +1,5 @@
 import { MultiSelectMenuProps } from "./MultiSelectMenu.props";
-import MultiSelectMenuStyled from "./MultiSelectMenu.styled";
+import MultiSelectMenuStyled, { NoResultStyled } from "./MultiSelectMenu.styled";
 import MultiSelectMenuItem from "./MultiSelectMenuItem/MultiSelectMenuItem";
 import useMultiSelectMenu from "./MultiSelectMenu.hooks";
 import { forwardRef } from "react";
@@ -22,7 +22,7 @@ const MultiSelectMenu = forwardRef<{}, MultiSelectMenuProps>((props, forwardedRe
         filteredOptions,
     } = useMultiSelectMenu(props, forwardedRed);
 
-    let component: React.ReactNode = <>Nothing to show here</>;
+    let component: React.ReactNode = <NoResultStyled>Nothing to show here</NoResultStyled>;
 
     if (filteredOptions.length > 0) {
         component = filteredOptions.map((option, index) => (

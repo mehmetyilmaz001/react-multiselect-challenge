@@ -8,9 +8,11 @@ export interface IMultiSelectContext {
     value: MultiSelectOption[];
     options: MultiSelectOption[];
     filteredOptions: MultiSelectOption[];
+    searchText?: string;
     setValue: (value: MultiSelectOption[]) => void;
     setOptions: (options: MultiSelectOption[]) => void;
     setFilteredOptions: (options: MultiSelectOption[]) => void;
+    setSearchText?: (searchText: string) => void;
 }
 
 export const MultiSelectContext = createContext<IMultiSelectContext>({
@@ -19,7 +21,8 @@ export const MultiSelectContext = createContext<IMultiSelectContext>({
     filteredOptions: [],
     setValue: () => { },
     setOptions: () => { },
-    setFilteredOptions: () => { }
+    setFilteredOptions: () => { },
+    setSearchText: () => { },
 });
 /* Context End */
 
@@ -43,13 +46,24 @@ const MultiSelectProvider: FC<MultiSelectProviderProps> = ({ children, initialVa
     const [value, setValue] = useState<MultiSelectOption[]>(initialValue);
     const [options, setOptions] = useState<MultiSelectOption[]>(initialOptions);
     const [filteredOptions, setFilteredOptions] = useState<MultiSelectOption[]>(initialOptions);
+    const [searchText, setSearchText] = useState<string>();
 
     useUpdateEffect(() => {
         onChange?.(value);
     }, [value.length]);
 
     return (
-        <MultiSelectContext.Provider value={{ value, setValue, options, setOptions, filteredOptions, setFilteredOptions }}>
+        <MultiSelectContext.Provider 
+            value={{ 
+                value, 
+                setValue, 
+                options, 
+                setOptions, 
+                filteredOptions, 
+                setFilteredOptions,
+                searchText,
+                setSearchText
+            }}>
             {children}
         </MultiSelectContext.Provider>
     )
@@ -62,7 +76,9 @@ export const useMultiSelectContext = () => {
         setValue,
         options,
         filteredOptions,
-        setFilteredOptions
+        setFilteredOptions,
+        searchText,
+        setSearchText,
     } = useContext(MultiSelectContext);
 
     /**
@@ -86,7 +102,7 @@ export const useMultiSelectContext = () => {
     const onSearchChange = debounce((value: string) => {
         // search for value in the options
         // if found, filter the options
-        console.log('onSearchChange', value);
+        setSearchText(value);
 
         if (value) {
             console.log('%cMultiSelect.context.tsx line:94 options', 'color: #007acc;', options);
@@ -99,8 +115,13 @@ export const useMultiSelectContext = () => {
 
     }, 500);
 
-    console.log('%cMultiSelect.context.tsx line:100 options', 'color: #007acc;', options);
-
-
-    return { value, setValue, onSearchChange, onItemSelect, onRemoveItem, filteredOptions };
+    return { 
+            value, 
+            setValue, 
+            onSearchChange, 
+            onItemSelect, 
+            onRemoveItem, 
+            filteredOptions,
+            searchText,
+     };
 }

@@ -21,7 +21,6 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>((props, ref) =>
         value,
         options,
         placeholder,
-        optionRenderer,
         classSuffix = 'multi-select',
         onChange,
         onSearch,

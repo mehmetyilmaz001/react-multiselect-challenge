@@ -10,7 +10,7 @@ export const App: FC = () => {
   const { isLoading, options, err, onSearch, onChange, selectedOptions } = useAppHook();
 
   return (
-    <div>
+    <div className="app">
       <MultiSelect
         onChange={onChange}
         options={options}
@@ -21,17 +21,19 @@ export const App: FC = () => {
         err={err}
       />
 
-      <hr />
 
-      <div>
-        <h3>Selected Options:</h3>
-        <ul>
-          {selectedOptions.map((item) => (
-            <li key={item.value}>{item.label}</li>
-          ))}
-        </ul>
-      </div>
+      {selectedOptions && selectedOptions.length > 0 && (
+        <div className="card">
+          <h3>Selected Options:</h3>
+          <ul>
+            {selectedOptions.map((item) => (
+              <li key={item.value}>{item.label}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
+
   );
 
 };

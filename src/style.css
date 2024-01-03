@@ -14,3 +14,31 @@ h1 {
   font-weight: 800;
   font-size: 1.5rem;
 }
+
+.app {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: #f4f4f4;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+  }
+}
